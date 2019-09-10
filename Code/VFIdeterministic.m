@@ -7,7 +7,7 @@ sigma = 2;
 A_h = 1; A_l = 678;
 pi_hh = 0.977; pi_hl = 1-pi_hh;
 pi_ll = 0.926; pi_lh = 1-pi_ll;
-A=[A_h;A_l];
+
 
 %%%% Set up discretized state space
 k_min = 0;
@@ -34,27 +34,33 @@ ret_l(cons_l < 0) = -Inf;
 
 %%%% Iteration
 dis = 1; tol = 1e-06; % tolerance for stopping 
-v_guess = zeros(1, num_k);
+v_guess_h = zeros(1, num_k);
+v_guess_l = zeros(1, num_k);
+
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
-    value_mat_h = ret_h + beta * repmat(v_guess, [num_k 1]);%%%%%need to modify
-    value_mat_l = ret_l + beta * repmat(v_guess, [num_k 1]);%%%%%need to modify
+    value_mat_h = ret_h + beta * (pi_hh * repmat(v_guess_h, [num_k 1]) + pi_hl * repmat(v_guess_l, [num_k 1]));
+    value_mat_l = ret_l + beta * (pi_lh * repmat(v_guess_h, [num_k 1]) + pi_ll * repmat(v_guess_l, [num_k 1]));
 
     % find the optimal k' for every k:
-    [vfn_h, pol_indx] = max(value_mat_h, [], 2);
+    [vfn_h, pol_indx_h] = max(value_mat_h, [], 2);
     vfn_h = vfn_h';
     
-    [vfn_l, pol_indx] = max(value_mat_l, [], 2);
+    [vfn_l, pol_indx_l] = max(value_mat_l, [], 2);
     vfn_l = vfn_l';
+
     % what is the distance between current guess and value function
-    dis = max(abs(vfn - v_guess));
+    dis = [max(abs(vfn_h - v_guess_h)); max(abs(vfn_l - v_guess_l))];
     
     % if distance is larger than tolerance, update current guess and
     % continue, otherwise exit the loop
-    v_guess = vfn;
+    v_guess_h = vfn_h;
+    v_guess_l = vfn_l;
 end
 
-g = k(pol_indx); % policy function
+g_h = k(pol_indx_h); % policy function at A_h
+g_l = k(pol_indx_l); % policy function at A_l
+
 
 plot(k,vfn)
 figure
