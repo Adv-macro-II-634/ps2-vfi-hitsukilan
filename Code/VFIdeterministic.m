@@ -37,8 +37,8 @@ dis = 1; tol = 1e-06; % tolerance for stopping
 v_guess = zeros(1, num_k);
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
-    value_mat_h = ret_h + beta * repmat(v_guess, [num_k 1]);%%%%%modify
-    value_mat_l = ret_l + beta * repmat(v_guess, [num_k 1]);%%%%%modify
+    value_mat_h = ret_h + beta * repmat(v_guess, [num_k 1]);%%%%%need to modify
+    value_mat_l = ret_l + beta * repmat(v_guess, [num_k 1]);%%%%%need to modify
 
     % find the optimal k' for every k:
     [vfn_h, pol_indx] = max(value_mat_h, [], 2);
