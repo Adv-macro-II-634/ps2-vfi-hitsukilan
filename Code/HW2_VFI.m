@@ -1,4 +1,4 @@
-%$$$ HW2 Q2 Q3 %%%%
+%%%% HW2 Q2 Q3 %%%%
 close all
 
 %%%% set up parameters
