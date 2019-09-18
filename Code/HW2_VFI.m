@@ -63,7 +63,7 @@ g_l = k(pol_indx_l); % policy function at A_l
 
 %%%% Plot VF over K at each stage A %%%%
 
-figure (1);
+figure(1)
 plot(k,vfn_h,'DisplayName','A_h', 'LineWidth',2);
 hold on;
 plot(k,vfn_l,'DisplayName','A_l','LineWidth',2);
@@ -75,9 +75,10 @@ lgd = legend;
 lgd.Location ='Southeast';
 lgd.FontSize = 14;
 
+
 %%%% Plot PF over K at each stage A %%%%
 
-figure (2);
+figure(2)
 plot(k,g_h,'DisplayName','A_h', 'LineWidth',2);
 hold on;
 plot(k,g_l,'DisplayName','A_l','LineWidth',2);
@@ -94,7 +95,7 @@ lgd.FontSize = 14;
 S_h = g_h - (1-delta) * k;
 S_l = g_l - (1-delta) * k;
 
-figure (3);
+figure(3)
 plot(k,S_h,'DisplayName','A_h', 'LineWidth',2);
 hold on;
 plot(k,S_l,'DisplayName','A_l','LineWidth',2);
