@@ -454,6 +454,7 @@ Question 4.
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 The long run probability for 
 \begin_inset Formula $A$
 \end_inset
@@ -479,6 +480,7 @@ The long run probability for
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 Therefore, 
 \begin_inset Formula $[\begin{array}{cc}
 \bar{\Pi}^{h} & \bar{\Pi}^{l}\end{array}]=\left[\begin{array}{cc}
@@ -489,6 +491,7 @@ Therefore,
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 In the simulation, I choose to adjust 
 \begin_inset Formula $A^{h}$
 \end_inset
@@ -525,6 +528,7 @@ A^{h} & A^{l}\end{array}\right]=\left[\begin{array}{cc}
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing onehalf
 with a simulated GDP fluction of 1.757%.
 \end_layout
 

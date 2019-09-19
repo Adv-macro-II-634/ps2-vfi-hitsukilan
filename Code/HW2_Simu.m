@@ -7,7 +7,9 @@ pi_lr = pi^10000; %long run transition probability (Markov Chain)
 
 %%%% Requirement 1, longrun mean of A = 1 %%%%
 
-A_h = 1.1; %choose 1.1 as the initial value of A_h, adjust in the model
+A_h = 1.22; %choose 1.1 as the initial value of A_h, compare with the
+% fluctuation of sd(Y)=1.8 and adjust manually
+
 A_l = (1 - pi_lr(1,1)*A_h)/pi_lr(2,2);
 
 %%%% Requirment 2, sd of Y_t in the model to be similar in the data%%%%
@@ -70,21 +72,21 @@ g_l = k(pol_indx_l); % policy function at A_l
 %%%% Simulation Problem %%%%
 
 % generate the sequence of capital 
-K_sim = zeros(1, 1000+1);
+K_sim = zeros(1, 10000+1);
 K_sim(1) = 5; % note ks are in (0,45]
 
-for i = 2:1000+1
+for i = 2:10000+1
     [dif, lcn] = min(abs(K_sim(i-1)-k)); 
     K_sim(i) = g_h(lcn);
 end
 
 % generate the sequence of A
 rng(9876);
-A_sim = zeros(1,1000+1);
-prob = rand(1,1000);
+A_sim = zeros(1,10000+1);
+prob = rand(1,10000);
 A_sim(1)= A_h;
 
-for j = 2:1000+1
+for j = 2:10000+1
    if A_sim(j-1) == A_h
        if prob(j-1) < pi_hh
            A_sim(j) = A_l;
@@ -93,11 +95,24 @@ for j = 2:1000+1
        end
    else
        if prob(j-1) < pi_ll
-           A_sim(j) = A_l;
-       else
            A_sim(j) = A_h;
+       else
+           A_sim(j) = A_l;
        end
    end
 end
+
+% compute output Y
+Y_sim = A_sim.* K_sim.^alpha;
+Y_SD = std(Y_sim);
+
+figure(4)
+plot(Y_sim,'linewidth',2);
+xlabel('t');
+ylabel('Y_sim');
+title('Simulation of GDP','FontSize',18);
+
+
+
 
 
